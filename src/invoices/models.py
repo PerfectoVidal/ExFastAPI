@@ -1,7 +1,10 @@
+from functools import lru_cache
+
 from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL
 from sqlalchemy.orm import relationship
 
 from src.db.base import Base
+from src.settings import taxes
 
 
 class Invoice(Base):
@@ -9,9 +12,26 @@ class Invoice(Base):
     id = Column(Integer, primary_key=True, index=True)
     products = relationship("Product",
                             cascade="all,delete-orphan",
-                            back_populates="products",
+                            backref="products",
                             uselist=True,
                             )
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    User = relationship("User", back_populates="users", cascade="all,delete-orphan", )
+
+    @property
+    @lru_cache(maxsize=64)
+    def total(self) -> float:
+        return sum([product.price * product.invoice for product in self.products])
+
+    @property
+    @lru_cache(maxsize=64)
+    def tax(self) -> float:
+        return self.total * taxes
+
+    @property
+    @lru_cache(maxsize=64)
+    def total_inc_tax(self) -> float:
+        return self.tax + self.total
 
 
 class Product(Base):
@@ -31,6 +51,6 @@ class Catalog(Base):
     product_name = Column(String(256))
     price = Column(DECIMAL(10, 2))
     products = relationship("Product",
-                            back_populates="products",
+                            backref="products",
                             uselist=True,
                             )

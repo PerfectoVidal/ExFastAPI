@@ -1,13 +1,7 @@
-from dotenv import load_dotenv
 import os
 
-from .users.models import User
-from .invoices.models import Invoice, Product, Catalog
+from dotenv import load_dotenv
 
 load_dotenv()
 
-uri_db = os.getenv('SQLALCHEMY_DATABASE_URI')
-
-models_to_import = [User,
-                    Invoice, Product, Catalog
-                    ]
+taxes = float(os.getenv('TAXES'))
