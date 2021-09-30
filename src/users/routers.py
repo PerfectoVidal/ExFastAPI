@@ -1,9 +1,9 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 from sqlalchemy.orm import Query
 
-from settings_db import session
-from users.models import User
-from users.schemas import UserList, UserResult, UserCreate
+from src.db.session import session
+from src.users.models import User
+from src.users.schemas import UserList, UserResult, UserCreate
 
 router = APIRouter()
 
@@ -29,3 +29,5 @@ async def search_user(name: str):
     q = Query([User], session=session).filter(User.name == name).first()
     if q:
         return UserResult(**q.__dict__)
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"The user with name {name} not found")

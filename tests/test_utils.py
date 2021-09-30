@@ -1,6 +1,6 @@
 import pytest
 
-from utils import the_list_contain_the_same_elements
+from src.utils import the_list_contain_the_same_elements
 
 
 @pytest.mark.parametrize('list1,list2,result', [

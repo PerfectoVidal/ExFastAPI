@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy_utils import EmailType, PasswordType
 
-from settings_db import Base
+from src.db.base import Base
 
 
 class User(Base):
