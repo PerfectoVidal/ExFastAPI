@@ -19,4 +19,4 @@ class User(Base):
         return str(self)
 
     def __str__(self):
-        return f'({self.name} {self.surname_1},{self.surname_2})'.strip()
+        return f'{self.name} {self.surname_1} {self.surname_2}'.strip()
