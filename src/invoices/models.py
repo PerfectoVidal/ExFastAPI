@@ -10,18 +10,14 @@ from src.settings import taxes
 class Invoice(Base):
     __tablename__ = 'invoices'
     id = Column(Integer, primary_key=True, index=True)
-    products = relationship("Product",
-                            cascade="all,delete-orphan",
-                            backref="products",
-                            uselist=True,
-                            )
+    products = relationship("Product", cascade="all", back_populates="invoice")
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    User = relationship("User", back_populates="users", cascade="all,delete-orphan", )
+    user = relationship("User", back_populates="invoices", cascade="all")
 
     @property
     @lru_cache(maxsize=64)
     def total(self) -> float:
-        return sum([product.price * product.invoice for product in self.products])
+        return sum([product.price * product.amout for product in self.products])
 
     @property
     @lru_cache(maxsize=64)
@@ -39,18 +35,18 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True)
     amount = Column(Integer, nullable=False)
     price = Column(DECIMAL(10, 2))
-    catalog_id = Column(Integer, ForeignKey("catalog.id"), nullable=True)
-    catalog = relationship("Catalog", back_populates="catalog")
+    catalogue_id = Column(Integer, ForeignKey("catalogue.id"), nullable=True)
+    catalogue_item = relationship("Catalog", back_populates="products")
     invoice_id = Column(Integer, ForeignKey("invoices.id"), nullable=True)
-    invoice = relationship("Invoice", back_populates="invoices", cascade="all,delete-orphan", )
+    invoice = relationship("Invoice", back_populates="products", cascade="all", )
 
 
 class Catalog(Base):
-    __tablename__ = 'catalog'
+    __tablename__ = 'catalogue'
     id = Column(Integer, primary_key=True, index=True)
     product_name = Column(String(256))
     price = Column(DECIMAL(10, 2))
     products = relationship("Product",
-                            backref="products",
+                            back_populates="catalogue_item",
                             uselist=True,
                             )
