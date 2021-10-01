@@ -4,7 +4,7 @@ from fastapi import status
 from sqlalchemy.orm import Query
 
 from main import app
-from src.utils import the_list_contain_the_same_elements
+from tests.utils import the_list_contain_the_same_elements
 from src.users.models import User
 
 client = TestClient(app)
