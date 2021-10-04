@@ -9,7 +9,7 @@ from src.settings import TEMPLATES
 router = APIRouter()
 
 
-@router.get("/products/", status_code=status.HTTP_200_OK, tags=["html"])
+@router.get("/api/v1/products/", status_code=status.HTTP_200_OK, tags=["html"])
 def get_all_catalog(request: Request) -> dict:
     return TEMPLATES.TemplateResponse(
         "products_list.html",

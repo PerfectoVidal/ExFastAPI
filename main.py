@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
-import src.users.routers
-import src.invoices.routers
+import src.users.routers.version_1
+import src.invoices.routers.version_1
 
 app = FastAPI(title="ExFastAPI")
 
-routers = [src.users.routers.router,
-           src.invoices.routers.router,
+routers = [src.users.routers.version_1.router,
+           src.invoices.routers.version_1.router,
            ]
 
 for router in routers:
