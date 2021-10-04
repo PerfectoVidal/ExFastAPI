@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <section class="bg-black ">
+        <div class="container px-5 py-12 mx-auto lg:px-20">
+            <div class="flex flex-col flex-wrap pb-6 mb-12 text-white ">
+                <h1 class="mb-12 text-3xl font-medium text-white">
+                    Product Catalog
+                </h1>
+            </div>
+            {% for product in products %}
+                <div
+                    class="flex flex-wrap items-end justify-start w-full transition duration-500 ease-in-out transform bg-black border-2 border-gray-600 rounded-lg hover:border-white ">
+                    <div class="w-full xl:w-1/4 md:w-1/4">
+                        <div class="relative flex flex-col h-full p-8 ">
+                            <h2 class="mb-4 font-semibold tracking-widest text-white uppercase title-font">
+                                {{product.name}}
+                            </h2>
+                            <p class="flex items-center mb-2 text-lg font-normal tracking-wide text-white">
+                                <span
+                                    class="inline-flex items-center justify-center flex-shrink-0 w-5 h-5 mr-2 text-white rounded-full bg-blue-1300">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2.5" class="w-4 h-4" viewBox="0 0 24 24">
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                    </svg>
+                                </span>{{product.price}} €
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+  </body>
+</html>
