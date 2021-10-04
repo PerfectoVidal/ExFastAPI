@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 from sqlalchemy_utils import EmailType, PasswordType
 
 from src.db.base import Base
@@ -14,6 +15,7 @@ class User(Base):
                                    deprecated=['md5_crypt']), nullable=False, )
     email = Column(EmailType, unique=True, index=True)
     is_superuser = Column(Boolean, default=False)
+    invoices = relationship("Invoice", cascade="all", back_populates="user")
 
     def __repr__(self):
         return str(self)

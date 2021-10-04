@@ -1,11 +1,11 @@
-from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-from .users.models import User
+from dotenv import load_dotenv
+from fastapi.templating import Jinja2Templates
 
 load_dotenv()
 
-uri_db = os.getenv('SQLALCHEMY_DATABASE_URI')
-
-models_to_import = [User,
-                    ]
+BASE_PATH = Path(__file__).resolve().parent
+TEMPLATES = Jinja2Templates(directory=str(BASE_PATH / "templates"))
+taxes = float(os.getenv('TAXES'))
