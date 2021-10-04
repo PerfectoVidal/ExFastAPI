@@ -8,14 +8,14 @@ from src.users.schemas import UserList, UserResult, UserCreate
 router = APIRouter()
 
 
-@router.get("/users/", tags=["users"], status_code=status.HTTP_200_OK, response_model=UserList)
+@router.get("/api/v1/users/", tags=["users"], status_code=status.HTTP_200_OK, response_model=UserList)
 async def read_all_users():
     q = Query([User], session=session).all()
     if q:
         return {'results': [UserResult(**user.__dict__) for user in q]}
 
 
-@router.post("/users/", tags=["users"], status_code=status.HTTP_201_CREATED, response_model=UserCreate)
+@router.post("/api/v1/users/", tags=["users"], status_code=status.HTTP_201_CREATED, response_model=UserCreate)
 async def create_user(*, user_data: UserCreate) -> dict:
     data = user_data.__dict__
     data['is_superuser'] = False
@@ -24,7 +24,7 @@ async def create_user(*, user_data: UserCreate) -> dict:
     return data
 
 
-@router.get("/users/{name}", tags=["users"], status_code=status.HTTP_200_OK, response_model=UserResult)
+@router.get("/api/v1/users/{name}", tags=["users"], status_code=status.HTTP_200_OK, response_model=UserResult)
 async def search_user(name: str):
     q = Query([User], session=session).filter(User.name == name).first()
     if q:
