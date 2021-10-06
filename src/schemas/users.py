@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Sequence, Optional
 
 from pydantic import BaseModel
 from pydantic import EmailStr
@@ -21,3 +21,7 @@ class UserResult(UserBase):
 
 class UserList(BaseModel):
     results: Sequence[UserResult]
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None

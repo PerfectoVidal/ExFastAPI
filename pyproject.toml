@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "app"
+version = "0.0.2"
+description = "Ejemplo de desarrollo con FastAPI"
+authors = ["Perfecto Vidal Lloret"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+uvicorn = "~0.11.3"
+fastapi = "~0.68.0"
+python-multipart = "~0.0.5"
+pydantic = {extras = ["email"], version = "~1.8.1"}
+Jinja2 = "^3.0.1"
+SQLAlchemy = {extras = ["mypy"], version = "^1.4.25"}
+SQLAlchemy-Utils="^0.37.8"
+tenacity = "^8.0.1"
+mypy = "^0.910"
+flake8 = "^3.9.2"
+python-dotenv = "^0.19.0"
+pytest = "^6.2.5"
+coverage = "^6.0"
+pytest-cov = "^3.0.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+ipython = "^7.28.0"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+httpx = "~0.18.1"
+fastapi-login = "^1.7.2"

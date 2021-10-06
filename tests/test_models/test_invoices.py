@@ -1,6 +1,5 @@
-from src.invoices.models import Invoice, Element, Product
-from src.users.models import User
-from sqlalchemy.orm import Query
+from src.models.invoices import Invoice, Product, Element
+from src.models.users import User
 
 
 class TestInvoice:

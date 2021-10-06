@@ -1,7 +1,12 @@
+import os
+
+from fastapi_login import LoginManager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from src.users.models import Base
+
 import pytest
+
+from src.db.base import Base
 
 
 @pytest.fixture(scope="session")
@@ -28,3 +33,18 @@ def dbsession(engine, tables):
     # roll back
     transaction.rollback()
     connection.close()
+
+
+@pytest.fixture(scope="session")
+def secret() -> str:
+    return os.urandom(24).hex()
+
+
+@pytest.fixture(scope="session")
+def token_url() -> str:
+    return "/auth/token"
+
+
+@pytest.fixture()
+def clean_manager(secret, token_url) -> LoginManager:
+    return LoginManager(secret, token_url)
