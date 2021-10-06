@@ -11,6 +11,7 @@ from src.settings import TEMPLATES
 
 router = APIRouter()
 
+
 @router.get(f'{url_version}/products', status_code=status.HTTP_200_OK, tags=['Html'])
 async def get_all_catalog(request: Request):
     with db_session() as session:
