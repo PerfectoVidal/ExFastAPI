@@ -4,8 +4,9 @@ from fastapi import status
 from sqlalchemy.orm import Query
 
 from main import app
+from src.models.users import User
 from tests.utils import the_list_contain_the_same_elements
-from src.users.models import User
+
 
 client = TestClient(app)
 
@@ -13,13 +14,13 @@ client = TestClient(app)
 class TestRouters:
 
     def test_read_all_users_empty(self, dbsession):
-        with patch('src.users.routers.version_1.users.session', new=dbsession):
+        with patch('src.routers.v1.users.db_session', return_value=dbsession):
             response = client.get("/api/v1/users/")
             assert all([response.status_code == 200,
                         response.json() is None])
 
     def test_read_all_users(self, dbsession):
-        with patch('src.users.routers.version_1.users.session', new=dbsession):
+        with patch('src.routers.v1.users.db_session', return_value=dbsession):
             users = [User(name='foo', surname_1='surfoo1', surname_2='surfoo2', password='1234', email='foo@gmail.com', is_superuser=False),
                      User(name='foo2', surname_1='surfoo12', surname_2='surfoo22', password='1234', email='foo2@gmail.com', is_superuser=False), ]
             result = [{'email': 'foo@gmail.com', 'name': 'foo', 'surname_1': 'surfoo1', 'surname_2': 'surfoo2'},
@@ -37,7 +38,7 @@ class TestRouters:
     def test_create_user(self, dbsession):
         info = [{'name': 'foo', 'surname_1': 'surfoo1', 'surname_2': 'surfoo2', 'password': '1234', 'email': 'foo@gmail.com'},
                 {'name': 'foo2', 'surname_1': 'surfoo12', 'surname_2': 'surfoo22', 'password': '1234', 'email': 'foo2@gmail.com'}]
-        with patch('src.users.routers.version_1.users.session', new=dbsession):
+        with patch('src.routers.v1.users.db_session', return_value=dbsession):
             for data in info:
                 response = client.post("/api/v1/users/", json=data)
         q = Query([User], session=dbsession).all()
@@ -47,7 +48,7 @@ class TestRouters:
                     the_list_contain_the_same_elements(['foo', 'foo2'], [el.name for el in q])])
 
     def test_search_user_empty(self, dbsession):
-        with patch('src.users.routers.version_1.users.session', new=dbsession):
+        with patch('src.routers.v1.users.db_session', return_value=dbsession):
             response = client.get("/api/v1/users/foo")
             assert all([response.status_code == status.HTTP_404_NOT_FOUND,
                         response.json() == {'detail': 'The user with name foo not found'}])
@@ -55,7 +56,7 @@ class TestRouters:
     def test_post_and_search(self, dbsession):
         info = [{'name': 'foo', 'surname_1': 'surfoo1', 'surname_2': 'surfoo2', 'password': '1234', 'email': 'foo@gmail.com'},
                 {'name': 'foo2', 'surname_1': 'surfoo12', 'surname_2': 'surfoo22', 'password': '1234', 'email': 'foo2@gmail.com'}]
-        with patch('src.users.routers.version_1.users.session', new=dbsession):
+        with patch('src.routers.v1.users.db_session', return_value=dbsession):
             for data in info:
                 client.post("/api/v1/users/", json=data)
             response = client.get("/api/v1/users/foo")

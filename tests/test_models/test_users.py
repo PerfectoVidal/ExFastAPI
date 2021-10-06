@@ -1,4 +1,4 @@
-from src.users.models import User
+from src.models.users import User
 
 
 class TestUSer:
