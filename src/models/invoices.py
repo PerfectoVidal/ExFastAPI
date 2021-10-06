@@ -22,12 +22,12 @@ class Invoice(Base):
     @property  # type: ignore
     @lru_cache(maxsize=64)  # type: ignore
     def tax(self) -> float:
-        return self.total * TAXES # type: ignore
+        return self.total * TAXES  # type: ignore
 
     @property  # type: ignore
     @lru_cache(maxsize=64)  # type: ignore
     def total_inc_tax(self) -> float:
-        return self.tax + self.total # type: ignore
+        return self.tax + self.total  # type: ignore
 
 
 class Element(Base):
