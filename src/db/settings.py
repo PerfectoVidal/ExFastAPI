@@ -1,13 +1,16 @@
-from dotenv import load_dotenv
 import os
+from typing import List
 
-from src.users.models import User
-from src.invoices.models import Invoice, Product, Element
+from dotenv import load_dotenv
+
+from src.models.invoices import Invoice, Product, Element
+from src.models.users import User
 
 load_dotenv()
 
-uri_db = os.getenv('SQLALCHEMY_DATABASE_URI')
+uri_db: str = os.getenv('SQLALCHEMY_DATABASE_URI')  # type: ignore
+create_tables: bool = True if os.getenv('CREATE_TABLES') == 'TRUE' else False
 
-models_to_import = [User,
-                    Invoice, Product, Element
-                    ]
+models_to_import: List = [User,
+                          Invoice, Product, Element
+                          ]

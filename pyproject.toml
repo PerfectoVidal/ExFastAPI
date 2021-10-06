@@ -11,7 +11,7 @@ fastapi = "~0.68.0"
 python-multipart = "~0.0.5"
 pydantic = {extras = ["email"], version = "~1.8.1"}
 Jinja2 = "^3.0.1"
-SQLAlchemy = "^1.4.22"
+SQLAlchemy = {extras = ["mypy"], version = "^1.4.25"}
 SQLAlchemy-Utils="^0.37.8"
 tenacity = "^8.0.1"
 mypy = "^0.910"
@@ -20,5 +20,8 @@ python-dotenv = "^0.19.0"
 pytest = "^6.2.5"
 coverage = "^6.0"
 pytest-cov = "^3.0.0"
-passlib = "^1.7.4"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 ipython = "^7.28.0"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+httpx = "~0.18.1"
+fastapi-login = "^1.7.2"
