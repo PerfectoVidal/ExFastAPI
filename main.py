@@ -16,7 +16,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(title="ExFastAPI",
-              version="0.1.1",
+              version="0.1.0",
               contact={"name": "Perfecto Vidal LLoret",
                        "email": "perfecto.vidal.lloret@gmail.com",
                        },
